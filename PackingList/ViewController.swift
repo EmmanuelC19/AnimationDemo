@@ -62,7 +62,7 @@ class ViewController: UIViewController {
       delay: 0.0,
       usingSpringWithDamping: 0.4,
       initialSpringVelocity: 10.0,
-      options: [],
+      options: [.allowUserInteraction],
       animations: {
         let angle: CGFloat = self.menuIsOpen
           ? .pi / 4
@@ -125,7 +125,17 @@ class ViewController: UIViewController {
       self.toggleMenu(self)
     })
     
-    //Add a view transition to the slider
+    let titleBar = slider.superview!
+    UIView.transition(
+        with: titleBar,
+        duration: 0.5,
+        options: [.curveEaseOut, .transitionFlipFromBottom],
+        animations: {
+            self.slider.removeFromSuperview()
+    }, completion: {_ in
+        titleBar.addSubview(self.slider)
+    }
+    )
   }
 }
 
